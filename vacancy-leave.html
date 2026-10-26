@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacancy & Leave Request | Hostel Room Allocation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    .leave-form-card, .leave-history-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 24px;
+    }
+    .leave-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+    .history-table th, .history-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.86rem;
+    }
+    .history-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 768px) {
+      .leave-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .history-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebarBackdrop" class="app-sidebar-backdrop" aria-hidden="true"></div>
+
+  <div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside id="appSidebar" class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1" />
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">HostelHub</span>
+          <span class="brand-tag">Room Allocation</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Menu</div>
+        <a href="student-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>My Profile</span>
+        </a>
+        <a href="room-availability.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Room Availability</span>
+          <span class="nav-item-badge">28 Vacant</span>
+        </a>
+        <a href="hostel-application.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <span>Hostel Application</span>
+        </a>
+        <a href="my-application.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <span>My Application</span>
+          <span class="nav-item-badge badge-purple">Approved</span>
+        </a>
+        <a href="my-room.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span>My Room</span>
+        </a>
+        <a href="vacancy-leave.html" class="nav-item active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Vacancy / Leave Request</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="sidebar-user-card">
+          <div class="user-avatar-mini" aria-hidden="true">AM</div>
+          <div class="user-info-mini">
+            <span class="user-name-mini student-name-display">Student</span>
+            <span class="user-role-mini student-id-display">STU-2024-8842</span>
+          </div>
+        </a>
+        <button type="button" class="btn-nav-logout btn-logout-trigger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN APP -->
+    <div class="app-main">
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" id="mobileSidebarToggle" class="btn-mobile-sidebar-toggle" aria-label="Toggle navigation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-breadcrumbs">
+            <a href="student-dashboard.html">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Vacancy / Leave Request</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <a href="profile.html" class="header-profile-link">
+            <div class="header-avatar" aria-hidden="true">AM</div>
+            <span class="header-profile-name student-name-display">Student</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="content-body">
+
+        <!-- Form Card -->
+        <section class="leave-form-card">
+          <div class="section-header" style="flex-wrap: wrap; gap: 14px;">
+            <div class="section-title-wrap">
+              <span class="section-icon-dot" aria-hidden="true"></span>
+              <h1 class="section-title" style="font-size: 1.45rem;">Apply for Room Vacancy / Out-pass Leave</h1>
+            </div>
+            <a href="student-dashboard.html" class="btn-secondary" style="padding: 8px 16px; font-size: 0.86rem;">
+              ← Back to Dashboard
+            </a>
+          </div>
+          <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 22px;">
+            Submit requests for temporary weekend night-out leaves or initiate end-of-semester hostel room vacancy clearance.
+          </p>
+
+          <form onsubmit="handleLeaveSubmit(event)">
+            <div class="leave-grid-2">
+              <div class="field-group">
+                <label class="field-label">Request Category <span class="required-star">*</span></label>
+                <select class="field-select" id="leaveType" required>
+                  <option value="weekend">Weekend / Vacation Home Leave Out-pass</option>
+                  <option value="academic">Academic / Internship Duty Leave</option>
+                  <option value="medical">Medical Emergency Leave</option>
+                  <option value="vacancy">Final Room Vacating &amp; Deposit Clearance</option>
+                </select>
+                <span class="field-help-text">Select type of leave or room vacating</span>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Current Allocated Accommodation <span class="required-star">*</span></label>
+                <input type="text" class="field-input" value="Block B - Room 304 (Bed 2)" readonly>
+                <span class="field-help-text">Auto-filled from active room record</span>
+              </div>
+            </div>
+
+            <div class="leave-grid-2">
+              <div class="field-group">
+                <label class="field-label">Departure Date &amp; Time <span class="required-star">*</span></label>
+                <input type="datetime-local" class="field-input" required>
+                <span class="field-help-text">Planned campus exit time</span>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Expected Return Date &amp; Time <span class="required-star">*</span></label>
+                <input type="datetime-local" class="field-input" required>
+                <span class="field-help-text">Planned return before 10:30 PM curfew</span>
+              </div>
+            </div>
+
+            <div class="field-group" style="margin-bottom: 20px;">
+              <label class="field-label">Reason for Absence / Destination Address <span class="required-star">*</span></label>
+              <textarea class="field-textarea" rows="2" placeholder="e.g. Visiting parents in Chicago for the weekend, traveling via campus train station." required></textarea>
+              <span class="field-help-text">Provide destination and reason for warden review</span>
+            </div>
+
+            <div class="form-actions-row">
+              <button type="submit" class="btn-submit-application">
+                <span>Submit Leave / Vacancy Application</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+              <a href="student-dashboard.html" class="btn-cancel">
+                Cancel &amp; Return to Dashboard
+              </a>
+            </div>
+          </form>
+        </section>
+
+        <!-- History Table -->
+        <section class="leave-history-card">
+          <div class="section-title-wrap">
+            <span class="section-icon-dot" aria-hidden="true"></span>
+            <h2 class="section-title">Past Leave &amp; Out-pass History</h2>
+          </div>
+
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Pass ID</th>
+                <th>Type</th>
+                <th>Dates</th>
+                <th>Destination</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#OP-1189</strong></td>
+                <td>Weekend Home Visit</td>
+                <td>12 Sep 2026 - 15 Sep 2026</td>
+                <td>Family Residence, Chicago</td>
+                <td><span class="metric-tag tag-success">Cleared &amp; Returned</span></td>
+              </tr>
+              <tr>
+                <td><strong>#OP-1044</strong></td>
+                <td>Hackathon Tech Fest</td>
+                <td>28 Aug 2026 - 30 Aug 2026</td>
+                <td>State University Campus</td>
+                <td><span class="metric-tag tag-success">Cleared &amp; Returned</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script>
+    function handleLeaveSubmit(e) {
+      e.preventDefault();
+      showToast('Leave Out-pass Application #OP-1240 submitted for Warden Approval!', 'success');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

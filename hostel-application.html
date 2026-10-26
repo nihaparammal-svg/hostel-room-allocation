@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hostel Application | Hostel Room Allocation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    .form-wrapper-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-card);
+      max-width: 920px;
+    }
+    .form-section-heading {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #1e1b4b;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .form-section-heading svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--primary-blue);
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field-label {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+    .field-input, .field-select, .field-textarea {
+      width: 100%;
+      padding: 11px 14px;         
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-light);
+      background-color: #f8fafc;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+    .field-input:focus, .field-select:focus, .field-textarea:focus {
+      background: #ffffff;
+      border-color: var(--primary-purple);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0 28px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary-purple);
+      cursor: pointer;
+    }
+    .btn-submit-application {
+      padding: 14px 28px;
+      border-radius: var(--radius-md);
+      background: var(--grad-primary);
+      color: #ffffff;
+      font-size: 0.96rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-card-hover);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .btn-submit-application:hover {
+      background: var(--grad-primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      .form-grid-2, .form-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .form-wrapper-card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebarBackdrop" class="app-sidebar-backdrop" aria-hidden="true"></div>
+
+  <div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside id="appSidebar" class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1" />
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">HostelHub</span>
+          <span class="brand-tag">Room Allocation</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Menu</div>
+        <a href="student-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>My Profile</span>
+        </a>
+        <a href="room-availability.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Room Availability</span>
+          <span class="nav-item-badge">28 Vacant</span>
+        </a>
+        <a href="hostel-application.html" class="nav-item active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <span>Hostel Application</span>
+        </a>
+        <a href="my-application.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <span>My Application</span>
+          <span class="nav-item-badge badge-purple">Approved</span>
+        </a>
+        <a href="my-room.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span>My Room</span>
+        </a>
+        <a href="vacancy-leave.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Vacancy / Leave Request</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="sidebar-user-card">
+          <div class="user-avatar-mini" aria-hidden="true">AM</div>
+          <div class="user-info-mini">
+            <span class="user-name-mini student-name-display">Student</span>
+            <span class="user-role-mini student-id-display">STU-2024-8842</span>
+          </div>
+        </a>
+        <button type="button" class="btn-nav-logout btn-logout-trigger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN APP -->
+    <div class="app-main">
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" id="mobileSidebarToggle" class="btn-mobile-sidebar-toggle" aria-label="Toggle navigation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-breadcrumbs">
+            <a href="student-dashboard.html">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Hostel Application</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-term-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Registration Phase II Active</span>
+          </div>
+          <a href="profile.html" class="header-profile-link">
+            <div class="header-avatar" aria-hidden="true">AM</div>
+            <span class="header-profile-name student-name-display">Student</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="section-header">
+          <div>
+            <h1 class="section-title" style="font-size: 1.6rem;">Hostel Admission &amp; Room Allocation Application</h1>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">
+              Please complete all mandatory academic and residence preference fields for semester room allotment.
+            </p>
+          </div>
+        </div>
+
+        <form id="hostelAppForm" class="form-wrapper-card" onsubmit="handleAppSubmit(event)">
+
+          <!-- Section 1 -->
+          <div class="form-section-heading">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>1. Student Identity &amp; Academic Credentials</span>
+          </div>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label class="field-label">Student ID / Roll No. <span class="required-star">*</span></label>
+              <input type="text" id="appStudentId" class="field-input" value="STU-2024-8842" readonly>
+              <span class="field-help-text">Verified student matriculation number</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Student Full Name <span class="required-star">*</span></label>
+              <input type="text" id="appStudentName" class="field-input" placeholder="e.g. Student" value="Student" required>
+              <span class="field-help-text">Enter full legal name as per college registry</span>
+            </div>
+          </div>
+          <div class="form-grid-3">
+            <div class="field-group">
+              <label class="field-label">Department / Branch <span class="required-star">*</span></label>
+              <input type="text" class="field-input" placeholder="e.g. Computer Science &amp; Engineering" value="Computer Science &amp; Engineering" required>
+              <span class="field-help-text">Academic major/department</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Academic Year <span class="required-star">*</span></label>
+              <select class="field-select">
+                <option value="3" selected>Year 3 (Pre-final)</option>
+                <option value="1">Year 1 (Freshman)</option>
+                <option value="2">Year 2 (Sophomore)</option>
+                <option value="4">Year 4 (Final Year)</option>
+              </select>
+              <span class="field-help-text">Current standing semester</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Cumulative GPA <span class="required-star">*</span></label>
+              <input type="text" class="field-input" placeholder="e.g. 8.92" value="8.92" required>
+              <span class="field-help-text">Used for merit-based priority</span>
+            </div>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="form-section-heading">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <span>2. Hostel Block &amp; Accommodation Preferences</span>
+          </div>
+          <div class="form-grid-3">
+            <div class="field-group">
+              <label class="field-label">Primary Block Preference <span class="required-star">*</span></label>
+              <select class="field-select" id="prefBlock">
+                <option value="B" selected>Block B - Orchard Hall (Boys AC)</option>
+                <option value="A">Block A - West Wing (Boys)</option>
+                <option value="C">Block C - Rose Hall (Girls AC)</option>
+                <option value="D">Block D - Skyline (Girls Deluxe)</option>
+              </select>
+              <span class="field-help-text">Choose your preferred dormitory</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Room Type Preference <span class="required-star">*</span></label>
+              <select class="field-select" id="prefRoomType">
+                <option value="2ac" selected>Double Sharing (AC)</option>
+                <option value="1ac">Single Occupancy (AC)</option>
+                <option value="2nonac">Double Sharing (Non-AC)</option>
+                <option value="3ac">Triple Sharing (AC)</option>
+              </select>
+              <span class="field-help-text">Select occupancy and climate control</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Mess / Meal Choice <span class="required-star">*</span></label>
+              <select class="field-select">
+                <option value="veg" selected>Veg / South &amp; North Dining</option>
+                <option value="nonveg">Special Non-Veg Plan</option>
+                <option value="diet">Healthy / Dietary Special</option>
+              </select>
+              <span class="field-help-text">Dining pass will be provisioned</span>
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="form-section-heading">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>3. Emergency &amp; Guardian Contacts</span>
+          </div>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label class="field-label">Parent / Guardian Name <span class="required-star">*</span></label>
+              <input type="text" class="field-input" placeholder="e.g. Dr. Robert Morgan" value="Dr. Robert Morgan" required>
+              <span class="field-help-text">Emergency primary contact person</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Guardian Emergency Phone <span class="required-star">*</span></label>
+              <input type="tel" class="field-input" placeholder="e.g. +1 (555) 438-9201" value="+1 (555) 438-9201" required>
+              <span class="field-help-text">Active phone number for verification</span>
+            </div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="declaration" required checked>
+            <label for="declaration">
+              I hereby declare that all information entered is accurate and I agree to abide by the university hostel rules and code of conduct. <span class="required-star">*</span>
+            </label>
+          </div>
+
+          <div class="form-actions-row">
+            <button type="submit" class="btn-submit-application">
+              <span>Submit Application for Allocation</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <a href="student-dashboard.html" class="btn-cancel">
+              Cancel &amp; Return to Dashboard
+            </a>
+          </div>
+
+        </form>
+      </main>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script>
+    // Prefill if coming from room selection
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedRoom = urlParams.get('selectedRoom');
+    if (selectedRoom) {
+      showToast(`Selected room preference recorded: ${selectedRoom}`, 'info');
+    }
+
+    function handleAppSubmit(e) {
+      e.preventDefault();
+      showToast('Submitting your Hostel Application #HAP-2026-981...', 'success');
+      setTimeout(() => {
+        window.location.href = 'my-application.html?submitted=true';
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

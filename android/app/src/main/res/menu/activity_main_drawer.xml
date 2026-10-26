@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/nav_dashboard" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person"
+            android:title="@string/nav_profile" />
+        <item
+            android:id="@+id/nav_rooms"
+            android:icon="@drawable/ic_hotel"
+            android:title="@string/nav_rooms" />
+        <item
+            android:id="@+id/nav_apply"
+            android:icon="@drawable/ic_assignment"
+            android:title="@string/nav_apply" />
+        <item
+            android:id="@+id/nav_my_application"
+            android:icon="@drawable/ic_assignment_turned_in"
+            android:title="@string/nav_my_application" />
+        <item
+            android:id="@+id/nav_my_room"
+            android:icon="@drawable/ic_meeting_room"
+            android:title="@string/nav_my_room" />
+        <item
+            android:id="@+id/nav_vacancy_leave"
+            android:icon="@drawable/ic_event_note"
+            android:title="@string/nav_vacancy_leave" />
+    </group>
+
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_exit_to_app"
+                android:title="@string/nav_logout" />
+        </menu>
+    </item>
+</menu>

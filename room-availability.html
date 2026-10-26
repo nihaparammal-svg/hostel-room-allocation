@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Availability | Hostel Room Allocation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* Filter Bar Styles */
+    .filter-bar-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-chip {
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .filter-chip:hover {
+      background: #e2e8f0;
+      color: var(--primary-blue);
+    }
+    .filter-chip.active {
+      background: var(--grad-primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .search-room-input {
+      padding: 9px 16px 9px 38px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      background-color: #f8fafc;
+      font-size: 0.86rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-room-input:focus {
+      background: #ffffff;
+      border-color: var(--primary-purple);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    }
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-input-wrapper svg {
+      position: absolute;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Rooms Grid */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
+    }
+    .room-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-card);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: var(--transition);
+      position: relative;
+    }
+    .room-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+    .room-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .room-number-tag {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1e1b4b;
+    }
+    .room-block-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      background: #eff6ff;
+      color: var(--primary-blue);
+    }
+    .room-amenities-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .amenity-chip {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+    }
+    .room-beds-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      font-size: 0.82rem;
+    }
+    .btn-request-room {
+      width: 100%;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      background: var(--grad-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+    .btn-request-room:hover {
+      background: var(--grad-primary-hover);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebarBackdrop" class="app-sidebar-backdrop" aria-hidden="true"></div>
+
+  <div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside id="appSidebar" class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1" />
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">HostelHub</span>
+          <span class="brand-tag">Room Allocation</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Menu</div>
+        <a href="student-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>My Profile</span>
+        </a>
+        <a href="room-availability.html" class="nav-item active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Room Availability</span>
+          <span class="nav-item-badge">28 Vacant</span>
+        </a>
+        <a href="hostel-application.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <span>Hostel Application</span>
+        </a>
+        <a href="my-application.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <span>My Application</span>
+          <span class="nav-item-badge badge-purple">Approved</span>
+        </a>
+        <a href="my-room.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span>My Room</span>
+        </a>
+        <a href="vacancy-leave.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Vacancy / Leave Request</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="sidebar-user-card">
+          <div class="user-avatar-mini" aria-hidden="true">AM</div>
+          <div class="user-info-mini">
+            <span class="user-name-mini student-name-display">Student</span>
+            <span class="user-role-mini student-id-display">STU-2024-8842</span>
+          </div>
+        </a>
+        <button type="button" class="btn-nav-logout btn-logout-trigger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN APP -->
+    <div class="app-main">
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" id="mobileSidebarToggle" class="btn-mobile-sidebar-toggle" aria-label="Toggle navigation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-breadcrumbs">
+            <a href="student-dashboard.html">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Room Availability</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-term-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>28 Vacant Rooms Found</span>
+          </div>
+          <a href="profile.html" class="header-profile-link">
+            <div class="header-avatar" aria-hidden="true">AM</div>
+            <span class="header-profile-name student-name-display">Student</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="content-body">
+
+        <!-- Top Title Bar -->
+        <div class="section-header" style="flex-wrap: wrap; gap: 14px;">
+          <div>
+            <h1 class="section-title" style="font-size: 1.6rem;">Campus Room Availability &amp; Vacancy Status</h1>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">
+              Live vacancy status across Block A, Block B, Block C, and Block D. Select an available room to apply.
+            </p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <a href="student-dashboard.html" class="btn-secondary" style="padding: 10px 18px; font-size: 0.88rem;">
+              ← Back to Dashboard
+            </a>
+            <a href="hostel-application.html" class="btn-request-room" style="width: auto; padding: 10px 20px;">
+              Apply for Hostel →
+            </a>
+          </div>
+        </div>
+
+        <!-- Filter Controls Bar -->
+        <div class="filter-bar-card">
+          <div class="filter-group">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Filter By:</span>
+            <button type="button" class="filter-chip active" onclick="filterRooms('all', this)">All Rooms (7)</button>
+            <button type="button" class="filter-chip" onclick="filterRooms('available', this)">Available</button>
+            <button type="button" class="filter-chip" onclick="filterRooms('partial', this)">Partially Occupied</button>
+            <button type="button" class="filter-chip" onclick="filterRooms('block-B', this)">Block B</button>
+            <button type="button" class="filter-chip" onclick="filterRooms('block-A', this)">Block A</button>
+            <button type="button" class="filter-chip" onclick="filterRooms('girls', this)">Girls Blocks (C &amp; D)</button>
+          </div>
+
+          <div class="search-input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="roomSearchInput" class="search-room-input" placeholder="Search room no., block, or status..." onkeyup="searchRooms()">
+          </div>
+        </div>
+
+        <!-- Rooms Grid -->
+        <div class="rooms-grid" id="roomsContainer">
+
+          <!-- Room 1: Partially Occupied -->
+          <div class="room-card" data-block="B" data-status="partial" data-type="boys">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag">Room 304</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 3 • Deluxe Wing • Block B</div>
+              </div>
+              <span class="status-badge-partial">● Partially Occupied</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Air Conditioned</span>
+              <span class="amenity-chip">Attached Bath</span>
+              <span class="amenity-chip">Wi-Fi</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #b45309;">1 Bed Free (of 2)</span>
+            </div>
+            <button type="button" class="btn-request-room" onclick="requestRoom('Room 304 - Block B')">
+              Apply Now →
+            </button>
+          </div>
+
+          <!-- Room 2: Available (All beds free) -->
+          <div class="room-card" data-block="B" data-status="available" data-type="boys">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag">Room 308</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 3 • Garden View • Block B</div>
+              </div>
+              <span class="status-badge-available">● Available</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Air Conditioned</span>
+              <span class="amenity-chip">Balcony</span>
+              <span class="amenity-chip">2 Study Desks</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #059669;">2 Beds Free (of 2)</span>
+            </div>
+            <button type="button" class="btn-request-room" onclick="requestRoom('Room 308 - Block B')">
+              Apply Now →
+            </button>
+          </div>
+
+          <!-- Room 3: Available (Single Room) -->
+          <div class="room-card" data-block="A" data-status="available" data-type="boys">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag">Room 201</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 2 • East Wing • Block A</div>
+              </div>
+              <span class="status-badge-available">● Available</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Single AC</span>
+              <span class="amenity-chip">Private Balcony</span>
+              <span class="amenity-chip">Attached Bath</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #059669;">1 Bed Free (of 1)</span>
+            </div>
+            <button type="button" class="btn-request-room" onclick="requestRoom('Room 201 - Block A')">
+              Apply Now →
+            </button>
+          </div>
+
+          <!-- Room 4: Partially Occupied -->
+          <div class="room-card" data-block="A" data-status="partial" data-type="boys">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag">Room 214</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 2 • Quiet Zone • Block A</div>
+              </div>
+              <span class="status-badge-partial">● Partially Occupied</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Double Sharing</span>
+              <span class="amenity-chip">Wi-Fi</span>
+              <span class="amenity-chip">Non-AC Economy</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #b45309;">1 Bed Free (of 2)</span>
+            </div>
+            <button type="button" class="btn-request-room" onclick="requestRoom('Room 214 - Block A')">
+              Apply Now →
+            </button>
+          </div>
+
+          <!-- Room 5: Full (No vacancy) -->
+          <div class="room-card" data-block="A" data-status="full" data-type="boys">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag" style="color: #64748b;">Room 110</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 1 • Ground Floor • Block A</div>
+              </div>
+              <span class="status-badge-full">● Full</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Double Non-AC</span>
+              <span class="amenity-chip">Study Table</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #64748b;">0 Beds Free (Full)</span>
+            </div>
+            <button type="button" class="btn-secondary" style="width: 100%; opacity: 0.65; cursor: not-allowed;" disabled title="This room is currently full">
+              Full (No Vacancy)
+            </button>
+          </div>
+
+          <!-- Room 6: Available (Girls Block C) -->
+          <div class="room-card" data-block="C" data-status="available" data-type="girls">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag">Room 105</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 1 • Courtyard Facing • Block C</div>
+              </div>
+              <span class="status-badge-available">● Available</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Girls Residence</span>
+              <span class="amenity-chip">AC Double</span>
+              <span class="amenity-chip">Attached Bath</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #059669;">2 Beds Free (of 2)</span>
+            </div>
+            <button type="button" class="btn-request-room" onclick="requestRoom('Room 105 - Block C')">
+              Apply Now →
+            </button>
+          </div>
+
+          <!-- Room 7: Available (Girls Block D) -->
+          <div class="room-card" data-block="D" data-status="available" data-type="girls">
+            <div class="room-card-header">
+              <div>
+                <div class="room-number-tag">Room 402</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Floor 4 • Skyline Suite • Block D</div>
+              </div>
+              <span class="status-badge-available">● Available</span>
+            </div>
+            <div class="room-amenities-tags">
+              <span class="amenity-chip">Girls Deluxe</span>
+              <span class="amenity-chip">AC Single Suite</span>
+              <span class="amenity-chip">Lounge</span>
+            </div>
+            <div class="room-beds-stat">
+              <span style="font-weight: 600; color: var(--text-secondary);">Available Beds:</span>
+              <span style="font-weight: 800; color: #059669;">1 Bed Free (of 1)</span>
+            </div>
+            <button type="button" class="btn-request-room" onclick="requestRoom('Room 402 - Block D')">
+              Apply Now →
+            </button>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script>
+    function filterRooms(filterType, btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.room-card');
+      cards.forEach(card => {
+        const block = card.getAttribute('data-block');
+        const status = card.getAttribute('data-status');
+        const type = card.getAttribute('data-type');
+
+        if (filterType === 'all') {
+          card.style.display = 'flex';
+        } else if (filterType === 'available') {
+          card.style.display = (status === 'available') ? 'flex' : 'none';
+        } else if (filterType === 'partial') {
+          card.style.display = (status === 'partial') ? 'flex' : 'none';
+        } else if (filterType === 'block-B') {
+          card.style.display = (block === 'B') ? 'flex' : 'none';
+        } else if (filterType === 'block-A') {
+          card.style.display = (block === 'A') ? 'flex' : 'none';
+        } else if (filterType === 'girls') {
+          card.style.display = (type === 'girls') ? 'flex' : 'none';
+        }
+      });
+    }
+
+    function searchRooms() {
+      const q = document.getElementById('roomSearchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.room-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    function requestRoom(roomName) {
+      showToast(`Selected ${roomName}! Opening application form...`, 'success');
+      setTimeout(() => {
+        window.location.href = 'hostel-application.html?selectedRoom=' + encodeURIComponent(roomName);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

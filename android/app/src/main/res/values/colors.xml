@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Primary Colors (Blue & Purple Theme) -->
+    <color name="primary">#2563EB</color>
+    <color name="primary_dark">#1D4ED8</color>
+    <color name="primary_light">#DBEAFE</color>
+    <color name="purple_primary">#7C3AED</color>
+    <color name="purple_dark">#6D28D9</color>
+    <color name="purple_light">#EDE9FE</color>
+
+    <!-- UI Backgrounds and Surface -->
+    <color name="background">#F8FAFC</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="surface_header">#1E1B4B</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Borders & Dividers -->
+    <color name="divider">#E2E8F0</color>
+    <color name="border_light">#CBD5E1</color>
+    <color name="input_border">#E2E8F0</color>
+    <color name="input_focus">#2563EB</color>
+
+    <!-- Status Accents -->
+    <color name="success">#10B981</color>
+    <color name="success_light">#D1FAE5</color>
+    <color name="warning">#F59E0B</color>
+    <color name="warning_light">#FEF3C7</color>
+    <color name="danger">#EF4444</color>
+    <color name="danger_light">#FEE2E2</color>
+    <color name="info">#0284C7</color>
+    <color name="info_light">#E0F2FE</color>
+</resources>

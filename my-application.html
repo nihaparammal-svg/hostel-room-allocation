@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Application | Hostel Room Allocation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    .status-stepper-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 24px;
+    }
+    .stepper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .stepper-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin: 20px 0;
+    }
+    .stepper-list::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 30px;
+      right: 30px;
+      height: 3px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+    .stepper-progress-fill {
+      position: absolute;
+      top: 24px;
+      left: 30px;
+      width: 75%;
+      height: 3px;
+      background: var(--grad-primary);
+      z-index: 2;
+    }
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      max-width: 140px;
+    }
+    .step-bubble {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .step-item.completed .step-bubble {
+      background: var(--grad-primary);
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    .step-item.active .step-bubble {
+      border-color: var(--primary-purple);
+      color: var(--primary-purple);
+      background: #f3e8ff;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+    }
+    .step-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .step-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Details Card */
+    .details-table-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-card);
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .detail-row-item {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .detail-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .detail-value {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    @media (max-width: 768px) {
+      .stepper-list {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .stepper-list::before, .stepper-progress-fill {
+        display: none;
+      }
+      .step-item {
+        flex-direction: row;
+        max-width: none;
+        text-align: left;
+      }
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebarBackdrop" class="app-sidebar-backdrop" aria-hidden="true"></div>
+
+  <div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside id="appSidebar" class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1" />
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">HostelHub</span>
+          <span class="brand-tag">Room Allocation</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Menu</div>
+        <a href="student-dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>My Profile</span>
+        </a>
+        <a href="room-availability.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Room Availability</span>
+          <span class="nav-item-badge">28 Vacant</span>
+        </a>
+        <a href="hostel-application.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <span>Hostel Application</span>
+        </a>
+        <a href="my-application.html" class="nav-item active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <span>My Application</span>
+          <span class="nav-item-badge badge-purple">Approved</span>
+        </a>
+        <a href="my-room.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span>My Room</span>
+        </a>
+        <a href="vacancy-leave.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Vacancy / Leave Request</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="sidebar-user-card">
+          <div class="user-avatar-mini" aria-hidden="true">AM</div>
+          <div class="user-info-mini">
+            <span class="user-name-mini student-name-display">Student</span>
+            <span class="user-role-mini student-id-display">STU-2024-8842</span>
+          </div>
+        </a>
+        <button type="button" class="btn-nav-logout btn-logout-trigger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN APP -->
+    <div class="app-main">
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" id="mobileSidebarToggle" class="btn-mobile-sidebar-toggle" aria-label="Toggle navigation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-breadcrumbs">
+            <a href="student-dashboard.html">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">My Application</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-term-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Application Verified</span>
+          </div>
+          <a href="profile.html" class="header-profile-link">
+            <div class="header-avatar" aria-hidden="true">AM</div>
+            <span class="header-profile-name student-name-display">Student</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="content-body">
+
+        <!-- Status Stepper Card -->
+        <section class="status-stepper-card">
+          <div class="stepper-header" style="flex-wrap: wrap; gap: 14px;">
+            <div>
+              <span class="metric-tag tag-purple">Application #HAP-2026-981</span>
+              <h1 class="section-title" style="margin-top: 8px;">Admission &amp; Allocation Progress</h1>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <a href="student-dashboard.html" class="btn-secondary" style="padding: 6px 14px; font-size: 0.82rem;">
+                ← Back to Dashboard
+              </a>
+              <span class="metric-tag tag-success" style="font-size: 0.85rem; padding: 6px 14px;">
+                ● Status: Room Allocated
+              </span>
+            </div>
+          </div>
+
+          <div class="stepper-list">
+            <div class="stepper-progress-fill"></div>
+
+            <!-- Step 1 -->
+            <div class="step-item completed">
+              <div class="step-bubble">✓</div>
+              <span class="step-label">Submitted</span>
+              <span class="step-sub">15 Aug 2026</span>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-item completed">
+              <div class="step-bubble">✓</div>
+              <span class="step-label">Documents</span>
+              <span class="step-sub">Verified</span>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-item completed">
+              <div class="step-bubble">✓</div>
+              <span class="step-label">Merit Check</span>
+              <span class="step-sub">Cleared</span>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-item completed">
+              <div class="step-bubble">✓</div>
+              <span class="step-label">Room Allotted</span>
+              <span class="step-sub">Block B - 304</span>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-item active">
+              <div class="step-bubble">5</div>
+              <span class="step-label">Check-in Pass</span>
+              <span class="step-sub">Gate Pass Issued</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Application Summary Details Card -->
+        <section class="details-table-card">
+          <div class="section-header" style="flex-wrap: wrap; gap: 14px;">
+            <div class="section-title-wrap">
+              <span class="section-icon-dot" aria-hidden="true"></span>
+              <h2 class="section-title">Allocation Breakdown &amp; Details</h2>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="student-dashboard.html" class="btn-secondary" style="padding: 8px 16px; font-size: 0.86rem;">
+                ← Back to Dashboard
+              </a>
+              <button type="button" class="btn-warden-contact" style="background: #f1f5f9; color: var(--text-main); border: 1px solid var(--border-light);" onclick="showToast('Downloading official room allocation letter (PDF)...', 'success')">
+                📄 Download Letter (PDF)
+              </button>
+              <a href="my-room.html" class="btn-submit-application" style="padding: 8px 16px; font-size: 0.86rem;">
+                Open My Room Details →
+              </a>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-row-item">
+              <span class="detail-label">Student ID</span>
+              <span class="detail-value student-id-display">STU-2024-8842</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Student Name</span>
+              <span class="detail-value student-name-display">Student</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Allocated Residence Block</span>
+              <span class="detail-value" style="color: #2563eb;">Orchard Hall - Block B</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Allocated Room Number</span>
+              <span class="detail-value" style="color: #2563eb;">Room 304 (Bed 2 - East Wing)</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Room Type &amp; Comfort</span>
+              <span class="detail-value">Air Conditioned Double Sharing</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Mess &amp; Meal Card</span>
+              <span class="detail-value">Card #MP-8842 (South Dining Hall)</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Hostel Fee Receipt</span>
+              <span class="detail-value" style="color: #10b981;">Receipt #TXN-90214 ($1,250 Paid)</span>
+            </div>
+            <div class="detail-row-item">
+              <span class="detail-label">Chief Warden Authorization</span>
+              <span class="detail-value">Prof. S. Nair (Warden-in-Chief)</span>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

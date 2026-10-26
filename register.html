@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration | Hostel Room Allocation &amp; Vacancy Registration System</title>
+  <meta name="description" content="Student Registration portal for Hostel Room Allocation and Vacancy Registration System.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .reg-wrapper {
+      max-width: 580px;
+      margin: 30px auto;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .reg-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .reg-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .reg-wrapper {
+        padding: 24px 20px;
+        margin: 16px;
+      }
+      .reg-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="ambient-blob ambient-blob-1"></div>
+    <div class="ambient-blob ambient-blob-2"></div>
+    <div class="ambient-blob ambient-blob-3"></div>
+  </div>
+
+  <main class="reg-wrapper">
+
+    <!-- Header -->
+    <div class="reg-header">
+      <div class="student-portal-tag" style="justify-content: center; margin-bottom: 12px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        Hostel Management System
+      </div>
+      <h1 class="login-title" style="font-size: 1.85rem;">Student Registration</h1>
+      <p class="login-subtitle">
+        Create your student account to apply for hostel rooms, check live vacancies, and manage allocations.
+      </p>
+    </div>
+
+    <!-- Registration Form -->
+    <form id="studentRegisterForm" class="login-form" novalidate>
+
+      <!-- Student Full Name -->
+      <div class="form-group">
+        <label for="regName" class="form-label">
+          <span>Student Full Name *</span>
+        </label>
+        <div class="input-container">
+          <span class="input-prefix-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <input 
+            type="text" 
+            id="regName" 
+            name="name" 
+            class="form-input" 
+            placeholder="e.g. John Doe" 
+            required 
+            aria-required="true"
+          />
+        </div>
+      </div>
+
+      <!-- Student ID & Email in 2 columns -->
+      <div class="reg-grid-2">
+        <div class="form-group">
+          <label for="regStudentId" class="form-label">
+            <span>Student ID / Roll No *</span>
+          </label>
+          <div class="input-container">
+            <span class="input-prefix-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                <circle cx="9" cy="10" r="2"></circle>
+                <line x1="15" y1="8" x2="17" y2="8"></line>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="regStudentId" 
+              name="studentId" 
+              class="form-input" 
+              placeholder="e.g. STU-2024-8842" 
+              required 
+              aria-required="true"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regEmail" class="form-label">
+            <span>College Email *</span>
+          </label>
+          <div class="input-container">
+            <span class="input-prefix-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </span>
+            <input 
+              type="email" 
+              id="regEmail" 
+              name="email" 
+              class="form-input" 
+              placeholder="e.g. student@college.edu" 
+              required 
+              aria-required="true"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Password & Confirm Password in 2 columns -->
+      <div class="reg-grid-2">
+        <div class="form-group">
+          <label for="regPassword" class="form-label">
+            <span>Password *</span>
+          </label>
+          <div class="input-container">
+            <span class="input-prefix-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="regPassword" 
+              name="password" 
+              class="form-input" 
+              placeholder="Create password" 
+              required 
+              aria-required="true"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regConfirmPassword" class="form-label">
+            <span>Confirm Password *</span>
+          </label>
+          <div class="input-container">
+            <span class="input-prefix-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="regConfirmPassword" 
+              name="confirmPassword" 
+              class="form-input" 
+              placeholder="Re-enter password" 
+              required 
+              aria-required="true"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Register Button -->
+      <button type="submit" id="regSubmitBtn" class="btn-login" style="margin-top: 14px;">
+        <span class="btn-text">Register &amp; Access Dashboard</span>
+        <svg class="btn-arrow-icon" viewBox="0 0 24 24">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+
+    </form>
+
+    <!-- Already have an account? Sign In Link -->
+    <div class="register-callout" style="margin-top: 24px;">
+      <span>Already have an account?</span>
+      <a href="index.html" class="register-link">
+        Sign in here
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Interactive Toast Notification -->
+  <div id="toastNotification" class="toast-notification" role="status" aria-live="polite">
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    <span id="toastMessage">Action completed successfully</span>
+  </div>
+
+  <script>
+    document.getElementById('studentRegisterForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const studentId = document.getElementById('regStudentId').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+      if (!name || !studentId || !email || !password) {
+        showToast('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast('Passwords do not match. Please try again.', 'error');
+        return;
+      }
+
+      // Store student in registered registry
+      let users = {};
+      try {
+        users = JSON.parse(localStorage.getItem('hostel_registered_students') || '{}');
+      } catch (err) {}
+
+      users[studentId.toLowerCase()] = { name, studentId, email, password };
+      users[name.toLowerCase()] = { name, studentId, email, password };
+      localStorage.setItem('hostel_registered_students', JSON.stringify(users));
+
+      // Store dynamic student name and ID in session and local storage
+      sessionStorage.setItem('current_student_name', name);
+      sessionStorage.setItem('current_hostel_student', studentId);
+      localStorage.setItem('current_student_name', name);
+      localStorage.setItem('current_hostel_student', studentId);
+
+      // Loading state
+      const btn = document.getElementById('regSubmitBtn');
+      btn.classList.add('is-loading');
+      btn.disabled = true;
+
+      showToast(`Registration successful, ${name}! Redirecting to Dashboard...`, 'success');
+
+      setTimeout(() => {
+        window.location.href = 'student-dashboard.html';
+      }, 1000);
+    });
+
+    let toastTimeout;
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMessage');
+      if (!toast || !msg) return;
+      clearTimeout(toastTimeout);
+      msg.textContent = message;
+      toast.className = `toast-notification toast-${type} show`;
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

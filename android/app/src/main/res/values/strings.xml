@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hostel Management</string>
+    <string name="title_hostel_system">Hostel Room Allocation &amp; Vacancy System</string>
+    <string name="student_portal">Student Portal</string>
+
+    <!-- Login & Register -->
+    <string name="student_login">Student Login</string>
+    <string name="student_register">Student Registration</string>
+    <string name="login_subtitle">Welcome back! Sign in to access your hostel account.</string>
+    <string name="register_subtitle">Create your student account to apply for hostel rooms.</string>
+    <string name="student_id">Student ID</string>
+    <string name="student_id_hint">e.g. STU1024 or 2024CS101</string>
+    <string name="full_name">Full Name</string>
+    <string name="full_name_hint">e.g. John Doe</string>
+    <string name="email_address">College Email</string>
+    <string name="email_hint">student@college.edu</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="phone_hint">+91 98765 43210</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password_hint">Re-enter your password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="btn_login">Sign In</string>
+    <string name="btn_register">Create Account</string>
+    <string name="no_account_register">Don\'t have an account? Register</string>
+    <string name="have_account_login">Already have an account? Sign In</string>
+
+    <!-- Dashboard -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_profile">My Profile</string>
+    <string name="nav_rooms">Room Availability</string>
+    <string name="nav_apply">Hostel Application</string>
+    <string name="nav_my_application">My Application</string>
+    <string name="nav_my_room">My Room</string>
+    <string name="nav_vacancy_leave">Vacancy / Leave Request</string>
+    <string name="nav_logout">Logout</string>
+
+    <!-- Stat Cards -->
+    <string name="card_available_rooms">Available Rooms</string>
+    <string name="card_application_status">Application Status</string>
+    <string name="card_allocated_room">Allocated Room</string>
+    <string name="card_available_beds">Available Beds</string>
+    <string name="status_allotted">Room Allotted</string>
+    <string name="status_pending">Pending Approval</string>
+
+    <!-- Quick Actions -->
+    <string name="quick_actions">Quick Actions</string>
+    <string name="action_view_rooms">View Available Rooms</string>
+    <string name="action_apply">Apply for Hostel</string>
+    <string name="action_my_application">My Application</string>
+    <string name="action_my_room">My Room</string>
+
+    <!-- Recent Activity -->
+    <string name="recent_activity">Recent Activity</string>
+
+    <!-- Rooms -->
+    <string name="search_rooms_hint">Search room or block (e.g. 101, Block A)...</string>
+    <string name="filter_all">All Rooms</string>
+    <string name="filter_block_a">Block A</string>
+    <string name="filter_block_b">Block B</string>
+    <string name="filter_available">Available Only</string>
+    <string name="btn_apply_now">Apply Now</string>
+
+    <!-- Common -->
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_submit">Submit Application</string>
+    <string name="btn_save">Save Changes</string>
+    <string name="btn_close">Close</string>
+    <string name="status_approved">Approved</string>
+</resources>
